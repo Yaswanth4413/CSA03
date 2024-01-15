@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define TABLE_SIZE 10
+typedef struct {
+    int key;
+    int value;
+} KeyValuePair;
+KeyValuePair hashTable[TABLE_SIZE];
+int hash(int key) {
+    return key % TABLE_SIZE;
+}
+void insert(int key, int value) {
+    int index = hash(key);
+
+    while (hashTable[index].key != -1) {
+        index = (index + 1) % TABLE_SIZE; 
+    }
+    hashTable[index].key = key;
+    hashTable[index].value = value;
+}
+int search(int key) {
+    int index = hash(key);
+    while (hashTable[index].key != -1) {
+        if (hashTable[index].key == key) {
+            return hashTable[index].value;
+        }
+        index = (index + 1) % TABLE_SIZE; 
+    }
+    return -1;
+}
+
+int main() {
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        hashTable[i].key = -1; 
+        hashTable[i].value = -1;
+    }
+    insert(5, 10);
+    insert(15, 25);
+    insert(25, 50);
+    
+    int value1 = search(5);
+    int value2 = search(15);
+    int value3 = search(25);
+
+    printf("Value for key 5: %d\n", value1);
+    printf("Value for key 15: %d\n", value2);
+    printf("Value for key 25: %d\n", value3);
+
+    return 0;
+}

@@ -1,0 +1,41 @@
+#include <stdio.h>
+#define MAX_SIZE 10
+struct Stack {
+    int arr[MAX_SIZE];
+    int top;
+};
+void initialize(struct Stack *stack) {
+    stack->top = -1;
+}
+void push(struct Stack *stack, int value) {
+    if (stack->top == MAX_SIZE - 1) {
+        printf("Stack is full. Cannot push %d.\n", value);
+    } else {
+        stack->top++;
+        stack->arr[stack->top] = value;
+    }
+}
+int pop(struct Stack *stack) {
+    if (stack->top == -1) {
+        printf("Stack is empty. Cannot pop.\n");
+        return -1; // Return a sentinel value to indicate failure
+    } else {
+        int value = stack->arr[stack->top];
+        stack->top--;
+        return value;
+    }
+}
+int main() {
+    struct Stack stack;
+    initialize(&stack);
+
+    push(&stack, 10);
+    push(&stack, 20);
+    push(&stack, 30);
+
+    printf("Popped: %d\n", pop(&stack));
+    printf("Popped: %d\n", pop(&stack));
+    printf("Popped: %d\n", pop(&stack));
+    printf("Popped: %d\n", pop(&stack)); 
+    return 0;
+}
